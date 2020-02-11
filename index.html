@@ -60,20 +60,25 @@
   </style>
   <script>
 
-    const arrow = document.querySelector('.arrow');
-    const speed = document.querySelector('.speed-value');
+    const geoObject = {
+      arrow: document.querySelector('.arrow'),
+      speed: document.querySelector('.speed-value'),
+      init: () => {
+        // Use watchPosition rather than getPosition for continuous data:
+        navigator.geolocation.watchPosition((data) => {
+          console.log(data);
+          // Display km/h:
+          geoObject.speed.textContent = Math.round(data.coords.speed);
+          // Move the arrow according to the heading, which is the number of degrees relative to north:
+          geoObject.arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+        }, (err) => {
+          // If user won't allow access to geolocation:
+          alert(`App will not work without access to geolocation.`);
+        });
+      }
+    }
 
-    // Use watchPosition rather than getPosition for continuous data:
-    navigator.geolocation.watchPosition((data) => {
-      console.log(data);
-      // Display km/h:
-      speed.textContent = Math.round(data.coords.speed);
-      // Move the arrow according to the heading, which is the number of degrees relative to north:
-      arrow.style.transform = `rotate(${data.coords.heading}deg)`;
-    }, (err) => {
-      // If user won't allow access to geolocation:
-      alert(`App will not work without access to geolocation.`);
-    });
+    geoObject.init(); 
 
   </script>
 </body>
