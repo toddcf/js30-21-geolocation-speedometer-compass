@@ -1,1 +1,1 @@
-# js30-21-geolocation-speedometer-compass
+# JavaScript 30 #21: Geolocation Speedometer Compass
